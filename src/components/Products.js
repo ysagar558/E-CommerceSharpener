@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import CartContext from "../cart-context/CartContext";
 
 const productsArr = [
     {
@@ -25,13 +26,19 @@ const productsArr = [
 ];
 
 const Products = () => {
+    const cartCtx=useContext(CartContext);
+    const addToCart=(item)=>{
+        cartCtx.addItem(item);
+    }
+
+
     return (
         <Container className="mt-4">
             <Row className="g-4">
                 {productsArr.map((item) => (
                     <Col key={item.title} xs={12} md={6}>
                         <Card className="h-100 text-center shadow-sm">
-                            <img
+                            <Card.Img
                                 variant="top"
                                 src={item.imageUrl}
                                 style={{ height: "200px", objectFit: "cover" }}
@@ -39,7 +46,7 @@ const Products = () => {
                             <Card.Body>
                                 <Card.Title>{item.title}</Card.Title>
                                 <Card.Text>₹{item.price}</Card.Text>
-                                <Button variant="dark">Add to Cart</Button>
+                                <Button variant="dark" onClick={()=>addToCart(item)}>Add to Cart</Button>
                             </Card.Body>
                         </Card>
                     </Col>

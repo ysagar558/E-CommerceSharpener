@@ -1,36 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Button, ListGroup, Image } from "react-bootstrap";
-
-const cartElements = [
-  {
-    title: "Colors",
-    price: 100,
-    imageUrl:
-      "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-    quantity: 2,
-  },
-  {
-    title: "Black and white Colors",
-    price: 50,
-    imageUrl:
-      "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-    quantity: 3,
-  },
-  {
-    title: "Yellow and Black Colors",
-    price: 70,
-    imageUrl:
-      "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-    quantity: 1,
-  },
-];
+import CartContext from "../cart-context/CartContext";
 
 const Cart = ({ show, handleClose }) => {
-  const [items, setItems] = useState(cartElements);
+    const cartCtx=useContext(CartContext);
+  //const [items, setItems] = useState(cartElements);
 
-  const removeItem = (title) => {
-    setItems((prev) => prev.filter((item) => item.title !== title));
-  };
+//   const removeItem = (title) => {
+//     setItems((prev) => prev.filter((item) => item.title !== title));
+//   };
 
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -40,7 +18,8 @@ const Cart = ({ show, handleClose }) => {
 
       <Modal.Body>
         <ListGroup>
-          {items.map((item) => (
+             {cartCtx.items.length===0&&(<p className="text-center">Cart is empty</p>)}
+          {cartCtx.items.map((item) => (
             <ListGroup.Item
               key={item.title}
               className="d-flex justify-content-between align-items-center"
@@ -62,7 +41,7 @@ const Cart = ({ show, handleClose }) => {
               <Button
                 variant="danger"
                 size="sm"
-                onClick={() => removeItem(item.title)}
+                onClick={() => cartCtx.removeItem(item.title)}
               >
                 Remove
               </Button>
