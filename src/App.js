@@ -1,66 +1,25 @@
 //import logo from './logo.svg';
 import './App.css';
 import { Button } from 'react-bootstrap';
-
-const productsArr = [
-
-{
-
-title: 'Colors',
-
-price: 100,
-
-imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-
-},
-
-{
-
-title: 'Black and white Colors',
-
-price: 50,
-
-imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-
-},
-
-{
-
-title: 'Yellow and Black Colors',
-
-price: 70,
-
-imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-
-},
-
-{
-
-title: 'Blue Color',
-
-price: 100,
-
-imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
-
-}
-
-]
+import Products from './components/Products';
+import Cart from './components/Cart';
+import { useState } from 'react';
 
 function App() {
+  const [showCart,setShowCart]=useState(false);
   return (
-    <>
-    {productsArr.map((item)=>(
-      <div>
-        <img src={item.imageUrl} alt={item.title}/>
-        <h3>{item.title}</h3>
-        <h3>${item.price}</h3>
-        <Button>Add To Cart</Button>
+    <div>
+      <div style={{ textAlign: "right", padding: "20px" }}>
+        <Button variant="dark" onClick={() => setShowCart(true)}>
+          🛒 Cart
+        </Button>
       </div>
-    )
 
-    )}
+      {/* Cart Modal */}
+      <Cart show={showCart} handleClose={() => setShowCart(false)} />
+    <Products/>
     
-    </>
+    </div>
 
   );
 }
