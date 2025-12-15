@@ -7,15 +7,14 @@ const Navigation = () => {
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container className="justify-content-center">
 
-        <Navbar.Brand href="/">E-commerce Store</Navbar.Brand>
+        <Navbar.Brand as={NavLink} to="/">E-commerce Store</Navbar.Brand>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="text-center">
 
-            <NavLink
-              to="/"
+            <NavLink exact to="/"
               className="nav-link"
             >
               HOME
@@ -33,6 +32,13 @@ const Navigation = () => {
               className="nav-link"
             >
               ABOUT
+            </NavLink>
+
+            <NavLink 
+            to="/contact"
+            className="nav-link"
+            >
+              CONTACT US
             </NavLink>
 
           </Nav>

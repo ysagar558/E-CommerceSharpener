@@ -6,11 +6,12 @@ import { useContext, useState } from 'react';
 import CartProvider from './cart-context/CartProvider';
 import CartContext from './cart-context/CartContext';
 import CartIcon from './components/CartIcon';
-import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
+import { BrowserRouter,Switch,Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Products from './components/Products';
 import About from './components/About';
 import Home from './components/Home';
+import Contact from './components/Contact';
 
 function App() {
   // const [showCart,setShowCart]=useState(false);
@@ -21,19 +22,23 @@ function App() {
   // 0);
    
   return (
-    <Router>
+   
+    <BrowserRouter>
       <Navbar/>
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path='/products' element={<Products/>}/>
-        <Route path='/about' element={<About/>}/>
-      </Routes>
-    </Router>
+      <Switch>
+        <Route path="/" exact component={Home}></Route>
+        <Route path='/products' component={Products}></Route>
+        <Route path='/about' component={About}></Route>
+        <Route path='/contact' component={Contact}></Route>
+        </Switch>
+    </BrowserRouter>
     // <CartProvider>
     //   <CartIcon/>
     // <Products/>
     
     // </CartProvider>
+    
+
 
   );
 }
