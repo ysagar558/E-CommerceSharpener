@@ -12,6 +12,7 @@ import Products from './components/Products';
 import About from './components/About';
 import Home from './components/Home';
 import Contact from './components/Contact';
+import ProductDetails from './components/ProductDetails';
 
 function App() {
   // const [showCart,setShowCart]=useState(false);
@@ -27,6 +28,7 @@ function App() {
       <Navbar/>
       <Switch>
         <Route path="/" exact component={Home}></Route>
+        <Route path="/products/:productdetails" component={ProductDetails}></Route>
         <Route path='/products' component={Products}></Route>
         <Route path='/about' component={About}></Route>
         <Route path='/contact' component={Contact}></Route>
