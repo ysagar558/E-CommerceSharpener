@@ -13,6 +13,7 @@ import About from './components/About';
 import Home from './components/Home';
 import Contact from './components/Contact';
 import ProductDetails from './components/ProductDetails';
+import Login from './components/Login';
 
 function App() {
   // const [showCart,setShowCart]=useState(false);
@@ -32,6 +33,7 @@ function App() {
         <Route path='/products' component={Products}></Route>
         <Route path='/about' component={About}></Route>
         <Route path='/contact' component={Contact}></Route>
+        <Route path='/login' component={Login}></Route>
         </Switch>
     </BrowserRouter>
     // <CartProvider>

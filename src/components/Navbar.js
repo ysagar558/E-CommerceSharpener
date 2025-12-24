@@ -40,6 +40,9 @@ const Navigation = () => {
             >
               CONTACT US
             </NavLink>
+            <NavLink to='/login' className='nav-link'>
+            LOG IN
+            </NavLink>
 
           </Nav>
         </Navbar.Collapse>
