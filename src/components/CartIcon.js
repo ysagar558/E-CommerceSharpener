@@ -11,6 +11,9 @@ const CartIcon = () => {
     (sum, item) => sum + item.quantity,
     0
   );
+  const logoutHandler=()=>{
+    localStorage.removeItem('token');
+  }
 
   return (
     <>
@@ -18,6 +21,7 @@ const CartIcon = () => {
         <Button variant="dark" onClick={() => setShow(true)}>
           🛒 Cart ({totalItems})
         </Button>
+        <Button variant="dark" style={{marginLeft:'3px'}} onClick={logoutHandler}>Log Out</Button>
       </div>
 
       <Cart show={show} handleClose={() => setShow(false)} />

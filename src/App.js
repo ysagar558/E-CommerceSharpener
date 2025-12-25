@@ -6,7 +6,8 @@ import { useContext, useState } from 'react';
 import CartProvider from './cart-context/CartProvider';
 import CartContext from './cart-context/CartContext';
 import CartIcon from './components/CartIcon';
-import { BrowserRouter,Switch,Route } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter,Switch,Route,Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Products from './components/Products';
 import About from './components/About';
@@ -22,6 +23,8 @@ function App() {
   // const totalItems=cartCtx.items.reduce((sum,item)=>
   //   sum + item.quantity,
   // 0);
+  const isLogged=!!localStorage.getItem('token');
+  // const [token,setTokent]=useState(tokenId);
    
   return (
    
@@ -29,11 +32,26 @@ function App() {
       <Navbar/>
       <Switch>
         <Route path="/" exact component={Home}></Route>
-        <Route path="/products/:productdetails" component={ProductDetails}></Route>
-        <Route path='/products' component={Products}></Route>
-        <Route path='/about' component={About}></Route>
+        <Route path='/login'>
+        {!isLogged?<Login/>:<Redirect to='/products' />}
+        </Route>
+
+        <Route path="/products/:productdetails">
+          {isLogged ? <ProductDetails /> : <Redirect to="/login" />}
+        </Route>
+
+         <Route path="/products">
+          {isLogged ? <Products /> : <Redirect to="/login" />}
+        </Route>
+
+         <Route path='/about' component={About}></Route>
         <Route path='/contact' component={Contact}></Route>
-        <Route path='/login' component={Login}></Route>
+       
+       
+        {/* {tokenId && (<Route path="/products/:productdetails" component={ProductDetails}></Route>)} */}
+        {/* {tokenId && (<Route path='/products' component={Products}></Route>)} */}
+        {/* {!tokenId && (<Route path='/login' component={Login}></Route>)} */}
+        <Route path='*'><Redirect to='/login' /></Route>
         </Switch>
     </BrowserRouter>
     // <CartProvider>

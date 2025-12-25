@@ -1,5 +1,5 @@
 import React,{useRef,useState} from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect,useHistory} from 'react-router-dom';
 import './Login.css';
 
 const Login=()=>{
@@ -7,6 +7,7 @@ const Login=()=>{
     const emailRef=useRef();
     const passwordRef=useRef();
     const [isLoggedIn,setIsLoggedIn]=useState(false);
+    const history=useHistory();
 
     const submitHandler = async(e)=>{
         e.preventDefault();
@@ -30,22 +31,23 @@ const Login=()=>{
       );
 
       const data = await response.json();
+      console.log(data);
+      localStorage.setItem('token',data.idToken);
 
       if (!response.ok) {
         throw new Error(data.error.message || "Login failed");
       }
 
-  
-
+      history.replace("/products");
       setIsLoggedIn(true);
     } catch (err) {
       alert("Invalid email or password");
     }
     }
 
-    if(isLoggedIn){
-        return <Redirect to='/products' />
-    }
+    // if(isLoggedIn){
+    //     return <Redirect to='/products' />
+    // }
 
     return (
         <div className="contact-container">
