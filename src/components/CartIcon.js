@@ -7,12 +7,15 @@ const CartIcon = () => {
   const [show, setShow] = useState(false);
   const cartCtx = useContext(CartContext);
 
-  const totalItems = cartCtx.items.reduce(
-    (sum, item) => sum + item.quantity,
-    0
-  );
+  const totalItems = localStorage.getItem('length');
+  // cartCtx.items.reduce(
+  //   (sum, item) => sum + item.quantity,
+  //   0
+  // );
   const logoutHandler=()=>{
     localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    localStorage.removeItem('length');
   }
 
   return (

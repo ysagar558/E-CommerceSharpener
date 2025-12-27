@@ -33,6 +33,7 @@ const Login=()=>{
       const data = await response.json();
       console.log(data);
       localStorage.setItem('token',data.idToken);
+      localStorage.setItem('email',data.email);
 
       if (!response.ok) {
         throw new Error(data.error.message || "Login failed");

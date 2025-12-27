@@ -1,14 +1,70 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import { Modal, Button, ListGroup, Image } from "react-bootstrap";
 import CartContext from "../cart-context/CartContext";
 
 const Cart = ({ show, handleClose }) => {
     const cartCtx=useContext(CartContext);
-  //const [items, setItems] = useState(cartElements);
+  const [items, setItems] = useState([]);
 
-//   const removeItem = (title) => {
+const API_KEY='da198447115c44e5a4434fb0fedeec27';
+const userEmail=localStorage.getItem('email');
+const safeEmail=userEmail.replace(/[@.]/g,"");
+
+// const [cartItems,setCartItems]=useState([]);
+
+
+const fetchCartItems=async()=>{
+  const response = await fetch(
+      `https://crudcrud.com/api/${API_KEY}/cart${safeEmail}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch cart items");
+    }
+
+    const data = await response.json();
+    
+    // setItems(data);
+    localStorage.setItem('length',data.length);
+
+    console.log(data.length);
+
+    const merged = [];
+
+  data.forEach((item) => {
+    const index = merged.findIndex(
+      (i) => i.title === item.title
+    );
+
+    if (index !== -1) {
+      merged[index].quantity += 1;
+    } else {
+      merged.push({ ...item, quantity: 1 });
+    }
+  });
+
+  setItems(merged);
+
+}
+useEffect(()=>{
+  fetchCartItems();
+},[]);
+
+// const removeItem = (title) => {
 //     setItems((prev) => prev.filter((item) => item.title !== title));
 //   };
+
+  const removeItem = async(id) => {
+    await fetch(
+    `https://crudcrud.com/api/${API_KEY}/cart${safeEmail}/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+  fetchCartItems();
+  };
+
+
 
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -18,10 +74,10 @@ const Cart = ({ show, handleClose }) => {
 
       <Modal.Body>
         <ListGroup>
-             {cartCtx.items.length===0&&(<p className="text-center">Cart is empty</p>)}
-          {cartCtx.items.map((item) => (
+             {items.length===0&&(<p className="text-center">Cart is empty</p>)}
+          {items.map((item) => (
             <ListGroup.Item
-              key={item.title}
+              key={item._id}
               className="d-flex justify-content-between align-items-center"
             >
               <div className="d-flex align-items-center">
@@ -41,7 +97,7 @@ const Cart = ({ show, handleClose }) => {
               <Button
                 variant="danger"
                 size="sm"
-                onClick={() => cartCtx.removeItem(item.title)}
+                onClick={() => removeItem(item._id)}
               >
                 Remove
               </Button>

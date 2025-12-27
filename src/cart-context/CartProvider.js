@@ -1,23 +1,28 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import CartContext from "./CartContext";
 
 const CartProvider = (props) => {
   const [items, setItems] = useState([]);
+  const API_KEY='da198447115c44e5a4434fb0fedeec27';
+  const email=localStorage.getItem('email');
 
-  const addItemHandler = (item) => {
-    setItems((prevItems) => {
-      const existingIndex = prevItems.findIndex(
-        (i) => i.title === item.title
-      );
 
-      if (existingIndex !== -1) {
-        const updated = [...prevItems];
-        updated[existingIndex].quantity += 1;
-        return updated;
-      }
+  const addItemHandler = async (item,email) => {
+    const response = await fetch(
+    `https://crudcrud.com/api/${API_KEY}/cart${email}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(item),
+    }
+  );
 
-      return [...prevItems, { ...item, quantity: 1 }];
-    });
+  if (!response.ok) {
+    throw new Error("Failed to add product to cart");
+  }
+
   };
 
   const removeItemHandler = (title) => {
@@ -27,7 +32,7 @@ const CartProvider = (props) => {
   };
 
   const contextValue = {
-    items,
+    items:items,
     addItem: addItemHandler,
     removeItem: removeItemHandler,
   };
