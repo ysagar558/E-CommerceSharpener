@@ -6,7 +6,7 @@ const Cart = ({ show, handleClose }) => {
     const cartCtx=useContext(CartContext);
   const [items, setItems] = useState([]);
 
-const API_KEY='da198447115c44e5a4434fb0fedeec27';
+const API_KEY='675070a699724c9f91c4ffc759319d84';
 const userEmail=localStorage.getItem('email');
 const safeEmail=userEmail.replace(/[@.]/g,"");
 
@@ -44,8 +44,11 @@ const fetchCartItems=async()=>{
   });
 
   setItems(merged);
+  
 
 }
+
+
 useEffect(()=>{
   fetchCartItems();
 },[]);
@@ -63,8 +66,6 @@ useEffect(()=>{
   );
   fetchCartItems();
   };
-
-
 
   return (
     <Modal show={show} onHide={handleClose} centered>

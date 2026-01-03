@@ -6,15 +6,17 @@ import { useContext, useState } from 'react';
 import CartProvider from './cart-context/CartProvider';
 import CartContext from './cart-context/CartContext';
 import CartIcon from './components/CartIcon';
-import React from 'react';
+import React, {Suspense} from 'react';
 import { BrowserRouter,Switch,Route,Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Products from './components/Products';
-import About from './components/About';
 import Home from './components/Home';
-import Contact from './components/Contact';
 import ProductDetails from './components/ProductDetails';
-import Login from './components/Login';
+
+const About=React.lazy(()=>import('./components/About'));
+const Contact=React.lazy(()=>import('./components/Contact'));
+const Products=React.lazy(()=>import('./components/Products'));
+const Login=React.lazy(()=>import('./components/Login'));
+
 
 function App() {
   // const [showCart,setShowCart]=useState(false);
@@ -30,6 +32,7 @@ function App() {
    
     <BrowserRouter>
       <Navbar/>
+      <Suspense fallback={<p style={{textAlign:'center'}}>Loading...</p>}>
       <Switch>
         <Route path="/" exact component={Home}></Route>
         <Route path='/login'>
@@ -44,8 +47,8 @@ function App() {
           {isLogged ? <Products /> : <Redirect to="/login" />}
         </Route>
 
-         <Route path='/about' component={About}></Route>
-        <Route path='/contact' component={Contact}></Route>
+         <Route path='/about'><About/></Route>
+        <Route path='/contact'><Contact/></Route>
        
        
         {/* {tokenId && (<Route path="/products/:productdetails" component={ProductDetails}></Route>)} */}
@@ -53,6 +56,7 @@ function App() {
         {/* {!tokenId && (<Route path='/login' component={Login}></Route>)} */}
         <Route path='*'><Redirect to='/login' /></Route>
         </Switch>
+        </Suspense>
     </BrowserRouter>
     // <CartProvider>
     //   <CartIcon/>

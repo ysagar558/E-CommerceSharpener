@@ -31,13 +31,14 @@ const Login=()=>{
       );
 
       const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error.message || "Login failed");
+      }
       console.log(data);
       localStorage.setItem('token',data.idToken);
       localStorage.setItem('email',data.email);
 
-      if (!response.ok) {
-        throw new Error(data.error.message || "Login failed");
-      }
+      
 
       history.replace("/products");
       setIsLoggedIn(true);

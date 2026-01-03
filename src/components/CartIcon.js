@@ -3,11 +3,11 @@ import CartContext from "../cart-context/CartContext";
 import { Button } from "react-bootstrap";
 import Cart from "./Cart";
 
-const CartIcon = () => {
+const CartIcon = (props) => {
   const [show, setShow] = useState(false);
   const cartCtx = useContext(CartContext);
 
-  const totalItems = localStorage.getItem('length');
+  // const totalItems = localStorage.getItem('length');
   // cartCtx.items.reduce(
   //   (sum, item) => sum + item.quantity,
   //   0
@@ -22,7 +22,7 @@ const CartIcon = () => {
     <>
       <div style={{ textAlign: "right", padding: "20px" }}>
         <Button variant="dark" onClick={() => setShow(true)}>
-          🛒 Cart ({totalItems})
+          🛒 Cart ({props.totalItemsInCart})
         </Button>
         <Button variant="dark" style={{marginLeft:'3px'}} onClick={logoutHandler}>Log Out</Button>
       </div>

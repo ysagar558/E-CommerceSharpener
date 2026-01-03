@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import CartContext from "../cart-context/CartContext";
 import CartIcon from "./CartIcon";
@@ -31,18 +31,28 @@ const productsArr = [
     },
 ];
 
+
 const Products = () => {
     const cartCtx=useContext(CartContext);
     const userEmail = localStorage.getItem('email');
     const safeEmail=userEmail.replace(/[@.]/g,"");
+    const [itemToAdd,setItemToAdd]=useState([]);
     const addToCart=(item)=>{
+        setItemToAdd(item);
         cartCtx.addItem(item,safeEmail);
+        
+        
+
     }
+    const totalItems=localStorage.getItem('length');
+    
+    console.log("Product re-rendered");
+    
 
 
     return (
         <>
-        <CartIcon/>
+        <CartIcon totalItemsInCart={totalItems}/>
         <Container className="mt-4">
             <Row className="g-4">
                 {productsArr.map((item) => (
