@@ -16,7 +16,7 @@ const Login=()=>{
 
     try {
       const response = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB0e7Z_UOBldjUY0i1y3N4i8t_odTfBaog`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=Your API key`,
         {
           method: "POST",
           headers: {
